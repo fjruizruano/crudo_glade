@@ -29,38 +29,8 @@ class Crud_GUI:
         self.window = self.builder.get_object("window1")
         self.window.show_all()
 
-    def changed_cb(self, cbox):
-        model=cbox.get_model()
-        index=cbox.get_active()
-        if index > -1:
-            print model[index][0], "selected"
-        return
-
     def onCrearActivate(self, menuitem):
         self.crear = menuitem.get_label()
-
-        self.window = self.builder.get_object("window1")
-        cbox = self.builder.get_object("combobox1")
-        store = Gtk.ListStore(str)
-#        store.append(["foobar"])
-#       cbox.set_model(store)
-#        tree_iter = cbox.get_active_iter()
-#       if tree_iter != None:
-#           model = cbox.get_model()
-#           value = model[tree_iter][0]
-#           priority.append(value)            
-        
-        cell = Gtk.CellRendererText()
-        cbox.pack_start(cell, True)
-        cbox.add_attribute(cell, "text", 0)
-        self.window.add(cbox)
-        cbox.set_wrap_width(5)
-        for n in range(50):
-            store.append(["Item %d" %n])
-        cbox.set_model(store)
-        cbox.connect("changed", self.changed_cb)
-        cbox.set_active(0)
-        self.window.show_all()
 
         Conexion = MySQLdb.connect(host="localhost", user="crud", passwd = "crudpass", db= "DBdeCrud")
         Conexion.commit()
@@ -70,19 +40,19 @@ class Crud_GUI:
             micursor.execute("DROP TABLE New;")
         except:
             pass
-
-        micursor.execute("CREATE TABLE New (id INT, Edad INT);")
-        
-        print "HOLA"
+        micursor.execute("CREATE TABLE New (id INT, Edad INT, Peso INT, Altura INT, IMC INT, Colesterol INT);")
         return True
 
     def onObtenerActivate(self, menuitem):
         self.obtener = menuitem.get_label()
-       
+        
         Conexion = MySQLdb.connect(host="localhost", user="crud", passwd = "crudpass", db= "DBdeCrud")
         micursor = Conexion.cursor()
+        counter = micursor.execute("SELECT COUNT(*) FROM New;")
         micursor.execute("SELECT * FROM New;")
-        print micursor.fetchone()
+        registros = micursor.fetchmany(counter)
+        for registro in registros:
+            print registro
 
 
     def onActualizarActivate(self, menuitem):
@@ -91,22 +61,36 @@ class Crud_GUI:
         entry1 = self.builder.get_object("entry1")
         entry2 = self.builder.get_object("entry2")
         entry3 = self.builder.get_object("entry3")
+        entry4 = self.builder.get_object("entry4")
+        entry5 = self.builder.get_object("entry5")
+        entry6 = self.builder.get_object("entry6")
+
+        ent1 = entry1.get_text()
+        ent2 = entry2.get_text()
+        ent3 = entry3.get_text()
+        ent4 = entry4.get_text()
+        ent5 = entry5.get_text()
+        ent6 = entry6.get_text()
 
         Conexion = MySQLdb.connect(host="localhost", user="crud", passwd = "crudpass", db= "DBdeCrud")
         micursor = Conexion.cursor()
-        micursor.execute("INSERT INTO New (id, Edad) VALUES (1,8);")
-        print micursor.fetchone()
+        micursor.execute("INSERT INTO New (id, Edad, Peso, Altura, IMC, Colesterol) VALUES (%s, %s, %s, %s, %s, %s);" % (ent1, ent2, ent3, ent4, ent5, ent6))
+        print micursor.fetchmany(1)
 
-        entry1.set_text("TEST\nTEST2")
-        entry2.set_text("2")
-        entry3.set_text("5")
+
+#        entry1.set_text("TEST\nTEST2")
+#        entry2.set_text("2")
+#        entry3.set_text("5")
 
     def onBorrarActivate(self, menuitem):
         self.borrar = menuitem.get_label()
 
+        entry1 = self.builder.get_object("entry1")
+        ent1 = entry1.get_text()
+
         Conexion = MySQLdb.connect(host="localhost", user="crud", passwd = "crudpass", db= "DBdeCrud")
         micursor = Conexion.cursor()
-        micursor.execute("DELETE FROM New;")
+        micursor.execute("DELETE FROM New;") #corregir
         print micursor.fetchone()
 
     def onAboutDialog(self, *args):
