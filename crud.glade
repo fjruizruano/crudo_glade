@@ -104,6 +104,36 @@
         <child>
           <object class="GtkVBox" id="vbox2">
             <property name="visible">True</property>
+            <property name="spacing">23</property>
+            <child>
+              <object class="GtkVBox" id="vbox3">
+                <property name="visible">True</property>
+                <child>
+                  <object class="GtkLabel" id="label8">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">ID REQUEST</property>
+                  </object>
+                  <packing>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkEntry" id="entry7">
+                    <property name="width_request">84</property>
+                    <property name="height_request">38</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="invisible_char">&#x25CF;</property>
+                  </object>
+                  <packing>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="position">0</property>
+              </packing>
+            </child>
             <child>
               <object class="GtkTable" id="table1">
                 <property name="height_request">1</property>
@@ -111,15 +141,9 @@
                 <property name="n_rows">2</property>
                 <property name="n_columns">6</property>
                 <child>
-                  <object class="GtkLabel" id="label1">
-                    <property name="visible">True</property>
-                    <property name="label" translatable="yes">label</property>
-                  </object>
-                </child>
-                <child>
                   <object class="GtkLabel" id="label2">
                     <property name="visible">True</property>
-                    <property name="label" translatable="yes">label</property>
+                    <property name="label" translatable="yes">Edad (a&#xF1;os)</property>
                   </object>
                   <packing>
                     <property name="left_attach">1</property>
@@ -129,7 +153,7 @@
                 <child>
                   <object class="GtkLabel" id="label3">
                     <property name="visible">True</property>
-                    <property name="label" translatable="yes">label</property>
+                    <property name="label" translatable="yes">Peso (kg)</property>
                   </object>
                   <packing>
                     <property name="left_attach">2</property>
@@ -139,7 +163,7 @@
                 <child>
                   <object class="GtkLabel" id="label4">
                     <property name="visible">True</property>
-                    <property name="label" translatable="yes">label</property>
+                    <property name="label" translatable="yes">Altura (cm)</property>
                   </object>
                   <packing>
                     <property name="left_attach">3</property>
@@ -149,7 +173,7 @@
                 <child>
                   <object class="GtkLabel" id="label5">
                     <property name="visible">True</property>
-                    <property name="label" translatable="yes">label</property>
+                    <property name="label" translatable="yes">IMC</property>
                   </object>
                   <packing>
                     <property name="left_attach">4</property>
@@ -159,7 +183,8 @@
                 <child>
                   <object class="GtkLabel" id="label6">
                     <property name="visible">True</property>
-                    <property name="label" translatable="yes">label</property>
+                    <property name="label" translatable="yes">Colesterol
+</property>
                   </object>
                   <packing>
                     <property name="left_attach">5</property>
@@ -237,24 +262,16 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkEntry" id="entry1">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="invisible_char">&#x25CF;</property>
-                  </object>
-                  <packing>
-                    <property name="top_attach">1</property>
-                    <property name="bottom_attach">2</property>
-                  </packing>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
                 </child>
               </object>
               <packing>
                 <property name="fill">False</property>
-                <property name="position">0</property>
+                <property name="position">1</property>
               </packing>
-            </child>
-            <child>
-              <placeholder/>
             </child>
           </object>
           <packing>

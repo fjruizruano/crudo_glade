@@ -35,37 +35,49 @@ class Crud_GUI:
         Conexion = MySQLdb.connect(host="localhost", user="crud", passwd = "crudpass", db= "DBdeCrud")
         Conexion.commit()
         micursor = Conexion.cursor()
-        print micursor
         try:
             micursor.execute("DROP TABLE New;")
         except:
             pass
         micursor.execute("CREATE TABLE New (id INT, Edad INT, Peso INT, Altura INT, IMC INT, Colesterol INT);")
-        return True
+        print "TABLA CREADA"
 
     def onObtenerActivate(self, menuitem):
         self.obtener = menuitem.get_label()
-        
-        Conexion = MySQLdb.connect(host="localhost", user="crud", passwd = "crudpass", db= "DBdeCrud")
-        micursor = Conexion.cursor()
-        counter = micursor.execute("SELECT COUNT(*) FROM New;")
-        micursor.execute("SELECT * FROM New;")
-        registros = micursor.fetchmany(counter)
-        for registro in registros:
-            print registro
 
-
-    def onActualizarActivate(self, menuitem):
-        self.actualizar = menuitem.get_label()
-
-        entry1 = self.builder.get_object("entry1")
+        entry7 = self.builder.get_object("entry7")
         entry2 = self.builder.get_object("entry2")
         entry3 = self.builder.get_object("entry3")
         entry4 = self.builder.get_object("entry4")
         entry5 = self.builder.get_object("entry5")
         entry6 = self.builder.get_object("entry6")
 
-        ent1 = entry1.get_text()
+        ent7 = entry7.get_text()
+        
+        Conexion = MySQLdb.connect(host="localhost", user="crud", passwd = "crudpass", db= "DBdeCrud")
+        micursor = Conexion.cursor()
+        micursor.execute("SELECT * FROM New WHERE id=%s;" % ent7 )
+        num_reg = micursor.rowcount
+        Conexion.commit()
+        registro = micursor.fetchone()
+
+        print registro
+
+        entry2.set_text(str(registro[1]))
+        entry3.set_text(str(registro[2]))
+        entry4.set_text(str(registro[3]))
+        entry5.set_text(str(registro[4]))
+        entry6.set_text(str(registro[5]))
+
+    def onActualizarActivate(self, menuitem):
+        self.actualizar = menuitem.get_label()
+
+        entry2 = self.builder.get_object("entry2")
+        entry3 = self.builder.get_object("entry3")
+        entry4 = self.builder.get_object("entry4")
+        entry5 = self.builder.get_object("entry5")
+        entry6 = self.builder.get_object("entry6")
+
         ent2 = entry2.get_text()
         ent3 = entry3.get_text()
         ent4 = entry4.get_text()
@@ -74,25 +86,31 @@ class Crud_GUI:
 
         Conexion = MySQLdb.connect(host="localhost", user="crud", passwd = "crudpass", db= "DBdeCrud")
         micursor = Conexion.cursor()
-        micursor.execute("INSERT INTO New (id, Edad, Peso, Altura, IMC, Colesterol) VALUES (%s, %s, %s, %s, %s, %s);" % (ent1, ent2, ent3, ent4, ent5, ent6))
-        print micursor.fetchmany(1)
+        micursor.execute("SELECT * FROM New;")
+        num_reg = micursor.rowcount
+        micursor.execute("INSERT INTO New (id, Edad, Peso, Altura, IMC, Colesterol) VALUES (%s, %s, %s, %s, %s, %s);" % (num_reg+1, ent2, ent3, ent4, ent5, ent6))
+        micursor.execute("SELECT * FROM New WHERE id=%s;" % str(num_reg+1))
+        print micursor.fetchone()
 
+#        counter = micursor.execute("SELECT COUNT(*) FROM New;")
 
-#        entry1.set_text("TEST\nTEST2")
-#        entry2.set_text("2")
-#        entry3.set_text("5")
+        Conexion.commit()
+
+        registros = micursor.fetchmany(num_reg)
+        for registro in registros:
+            print registro
 
     def onBorrarActivate(self, menuitem):
         self.borrar = menuitem.get_label()
 
-        entry1 = self.builder.get_object("entry1")
-        ent1 = entry1.get_text()
+        entry7 = self.builder.get_object("entry7")
+        ent7 = entry7.get_text()
 
         Conexion = MySQLdb.connect(host="localhost", user="crud", passwd = "crudpass", db= "DBdeCrud")
         micursor = Conexion.cursor()
-        micursor.execute("DELETE FROM New;") #corregir
-        print micursor.fetchone()
-
+        micursor.execute("DELETE FROM New WHERE id=%s;" % ent7 ) #corregir
+        print "borrado id %s" % ent7
+     
     def onAboutDialog(self, *args):
         self.about = self.builder.get_object("aboutdialog1")
         self.about.show_all()
