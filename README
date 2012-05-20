@@ -1,1 +1,19 @@
-crudo_glade 0.0.0
+crudo_glade 0.0.1
+
+Este programa Crea, Obtiene, Actualiza y Borra información de una base de datos.
+Antes de empezar, es necesario crear una base de datos de la siguiente forma:
+
+$ mysql -u root -p
+> CREATE DATABASE DBdeCrud;
+> GRANT ON ALL DBdeCrud.* TO "crud"@"localhost" IDENTIFIED BY "crudpass";
+> USE DBdeCrud
+> QUIT
+
+Por tanto el programa tiene 4 funciones:
+
+1. Crear. Crea una tabla nueva para poder empezar a trabajar, en el caso de que exista una tabla llamada "New".
+2. Obtener. Obtiene los valores asociados a un ID que ha de indicarse en el cuadro "ID REQUEST".
+3. Actualizar. El usuario añade los valores (incluido el ID) y son guardados como elemento de la tabla.
+4. Borrar. Borra los elementos con un ID igual al indicado en el cuadro "ID REQUEST".
+
+
